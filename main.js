@@ -25,3 +25,71 @@ classifier = ml5.imageClassifier('https://teachablemachine.withgoogle.com/models
   function modelLoaded() {
     console.log('Model Loaded!');
   }
+  function check()
+  {
+    img = document.getElementById('captured_image');
+    classifier.classify(img, gotResult);
+  }
+
+function gotResult(error, results) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log(results);
+    
+    document.getElementById("result_object_name").innerHTML = results[0].label;
+
+    gesture = results[0].label;
+    
+    toSpeak = "";
+    
+    if(gesture == "Amazing")
+    {
+      toSpeak = "That is amazing!";
+      document.getElementById("result_object_gesture_icon").innerHTML = "&#128076;";
+    }
+    else if(gesture == "Best")
+    {
+      toSpeak = "It's the best!";
+      document.getElementById("result_object_gesture_icon").innerHTML = "&#128077;";
+    }
+    else if(gesture == "Victory")
+    {
+      toSpeak = "That was a marvelous victory! We won!";
+      document.getElementById("result_object_gesture_icon").innerHTML = "&#9996;";
+    }
+    else if(gesture == "Namaste") {
+      toSpeak = "Namaste! How are you?";
+      document.getElementById("result_object_gesture_icon").innerHTML = "&#128591;";
+    }
+    else if(gesture == "Hand heart") {
+      toSpeak = "I love you!";
+      document.getElementById("result_object_gesture_icon").innerHTML = "&#10084;";
+    }
+    else if(gesture == "Dislike") {
+      toSpeak = "I don't like it";
+      document.getElementById("result_object_gesture_icon").innerHTML = "&#128078;";
+    }
+    else if(gesture == "Gun") {
+      toSpeak = "I'm going to shoot you! Just kidding!";
+      document.getElementById("result_object_gesture_icon").innerHTML = "&#128299;";
+    }
+    else if(gesture == "Clenched fist") {
+      toSpeak = "Ready for a punch fight?";
+      document.getElementById("result_object_gesture_icon").innerHTML = "&#9994;";
+    }
+    speak();
+  }
+}
+
+
+function speak(){
+    var synth = window.speechSynthesis;
+
+    speak_data = toSpeak;
+
+    var utterThis = new SpeechSynthesisUtterance(speak_data);
+
+    synth.speak(utterThis);
+
+}
